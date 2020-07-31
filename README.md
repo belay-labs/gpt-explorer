@@ -1,6 +1,6 @@
 # GPT-3 Explorer
 Welcome to the GPT-3 Explorer community repo!
-We hope that this tool enables you greater fluency in working with GPT-3.
+This is a power tool for experimenting with GPT-3 that we've been using to understand the model. We hope it's useful to you as well!
 
 This repo is primarily for two things:
 ### 1. Bug tracking
