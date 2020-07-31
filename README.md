@@ -10,18 +10,6 @@ This repo is primarily for two things:
 - [Put 'em here!](https://github.com/relephant-labs/explorer-community/issues/new)
 
 # More on Explorer
-## Current Features
-- Saves your entire history (securely to Firebase).
-- Vim style keybindings
-    - `[esc]` to open/close the history drawer.
-    - `[j/k]` to toggle through runs.
-- Append the previous run's output to the current prompt `[ctrl + enter]`
-- Annotate each run with notes `[ctrl + n]`
-- [Share your runs >>](https://gpt-3-explorer.vercel.app/p/R5WLwJTNWcCP7b0xwvEM)
-- Bring-your-own API key
-- Google OAuth
-
-## Screenshots
 ### Experiment with prompts
 ![Prompt dialogue](https://github.com/relephant-labs/explorer-community/blob/master/Screen%20Shot%202020-07-30%20at%2011.50.27%20PM.png?raw=true)
 
@@ -30,3 +18,14 @@ This repo is primarily for two things:
 
 ### Shareable prompts
 ![Shared prompt example](https://github.com/relephant-labs/explorer-community/blob/master/Screen%20Shot%202020-07-30%20at%2011.50.27%20PM.png?raw=true)
+
+## Current Features
+- Save your entire history (securely to Firebase).
+- Vim style keybindings
+    - `[esc]` to open/close the history drawer.
+    - `[j/k]` to toggle through runs.
+- Append the previous run's output to the current prompt `[ctrl + enter]`
+- Annotate each run with notes `[ctrl + n]`
+- [Share your runs >>](https://gpt-3-explorer.vercel.app/p/R5WLwJTNWcCP7b0xwvEM)
+- Bring-your-own API key
+- Google OAuth
