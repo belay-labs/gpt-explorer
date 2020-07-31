@@ -22,8 +22,8 @@ This repo is primarily for two things:
 ## Current Features
 - Save your entire history (securely to Firebase).
 - Vim style keybindings
-    - `[esc]` to open/close the history drawer.
-    - `[j/k]` to toggle through runs.
+    - `[esc]` to toggle open/close the history drawer.
+    - `[j/k]` to page through runs.
 - Append the previous run's output to the current prompt `[ctrl + enter]`
 - Annotate each run with notes `[ctrl + n]`
 - [Share your runs >>](https://gpt-3-explorer.vercel.app/p/R5WLwJTNWcCP7b0xwvEM)
