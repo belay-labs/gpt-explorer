@@ -1,18 +1,15 @@
 # GPT-3 Explorer
-
 Welcome to the GPT-3 Explorer community repo!
-
 We hope that this tool enables you greater fluency in working with GPT-3.
 
-
-This repo is for two things:
+This repo is primarily for two things:
 ### 1. Bug tracking
 - [Report bugs here 🐛](https://github.com/relephant-labs/explorer-community/issues/new)
 
 ### 2. Feature requests
 - [Put 'em here!](https://github.com/relephant-labs/explorer-community/issues/new)
 
-
+# More on Explorer
 ## Current Features
 - Saves your entire history (securely to Firebase).
 - Vim style keybindings
@@ -23,3 +20,13 @@ This repo is for two things:
 - [Share your runs >>](https://gpt-3-explorer.vercel.app/p/R5WLwJTNWcCP7b0xwvEM)
 - Bring-your-own API key
 - Google OAuth
+
+## Screenshots
+### Experiment with prompts
+![Prompt dialogue](https://github.com/relephant-labs/explorer-community/blob/master/Screen%20Shot%202020-07-30%20at%2011.50.27%20PM.png?raw=true)
+
+### Manage your GPT-3 history
+![History drawer](https://github.com/relephant-labs/explorer-community/blob/master/Screen%20Shot%202020-07-31%20at%2012.01.34%20AM.png?raw=true)
+
+### Shareable prompts
+![Shared prompt example](https://github.com/relephant-labs/explorer-community/blob/master/Screen%20Shot%202020-07-30%20at%2011.50.27%20PM.png?raw=true)
