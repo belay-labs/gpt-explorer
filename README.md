@@ -4,10 +4,10 @@ This is a power tool for experimenting with GPT-3 that we've been using to under
 
 This repo is primarily for two things:
 ### 1. Bug tracking
-- [Report bugs here 🐛](https://github.com/relephant-labs/explorer-community/issues/new)
+- [Report bugs here 🐛](https://github.com/relephant-labs/explorer-community/issues/new?labels=bug)
 
 ### 2. Feature requests
-- [Put 'em here!](https://github.com/relephant-labs/explorer-community/issues/new)
+- [Put 'em here!](https://github.com/belay-labs/explorer-community/issues/new?labels=feature-request)
 
 # More on Explorer
 ### Experiment with prompts
