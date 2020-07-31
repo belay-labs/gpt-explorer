@@ -1,14 +1,16 @@
-# GPT-3 Explorer Community Repo
+# GPT-3 Explorer
 
-Welcome to the GPT-3 Explorer community repo. We hope that Explorer enables you greater fluency in working with GPT-3.
+Welcome to the GPT-3 Explorer community repo!
+
+We hope that this tool enables you greater fluency in working with GPT-3.
 
 
 This repo is for two things:
 ### 1. Bug tracking
-- [Report bugs here 🐛](https://github.com/relephant-labs/explorer-community/issues)
+- [Report bugs here 🐛](https://github.com/relephant-labs/explorer-community/issues/new)
 
 ### 2. Feature requests
-- [Put 'em here!](https://github.com/relephant-labs/explorer-community/projects/1#column-10240899)(in the "Feature Requests" column)
+- [Put 'em here!](https://github.com/relephant-labs/explorer-community/issues/new)
 
 
 ## Current Features
