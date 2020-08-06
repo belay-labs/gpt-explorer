@@ -1,0 +1,28 @@
+.root {
+  padding: 20px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.leftColumn {
+  flex-basis: 0;
+  flex-grow: 1;
+  min-width: 450px;
+  margin-right: 30px;
+}
+
+.rightColumn {
+  flex-basis: 0;
+  flex-grow: 1;
+  border: 2px solid #f0f4f8;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  min-width: 450px;
+}

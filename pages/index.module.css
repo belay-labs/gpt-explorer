@@ -1,0 +1,29 @@
+.root {
+  height: 100vh;
+}
+
+.sidebarContainer {
+  height: 100vh !important;
+  overflow-y: hidden !important;
+}
+
+.sidebar {
+  width: 1000px !important;
+  max-width: 90%;
+  height: 100vh;
+  background-color: white;
+  overflow-y: hidden !important;
+}
+
+.explorer {
+  overflow-y: auto !important;
+  height: 100% !important;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 20px;
+}

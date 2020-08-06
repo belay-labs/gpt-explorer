@@ -1,0 +1,18 @@
+.settings {
+  background-color: #f0f4f8;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 4px;
+}
+
+.outputHeader {
+  border-bottom: 2px solid #f0f4f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.outputContainer {
+  padding: 20px;
+}

@@ -1,0 +1,79 @@
+.root {
+  padding: 20px;
+  height: 100%;
+}
+
+.list {
+  overflow-x: hidden;
+}
+
+.historyHeader {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  background-color: #bcccdc;
+}
+
+.promptCol {
+  padding: 5px;
+  width: 30%;
+}
+
+.outputCol {
+  padding: 5px;
+  width: 30%;
+}
+
+.settingsCol {
+  padding: 5px;
+  width: 160px;
+}
+
+.notesCol {
+  padding: 5px;
+  width: 10%;
+  flex-grow: 1;
+}
+
+.actionCol {
+  padding: 5px;
+  width: 110px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  border-bottom: solid 1px #f0f4f8;
+  height: 100%;
+}
+
+.row:hover {
+  cursor: pointer;
+  background-color: #f0f4f8;
+}
+
+.settingRow {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-line;
+}
+
+.lineClamp6 {
+  composes: lineClamp;
+  -webkit-line-clamp: 8;
+}
+
+.lineClamp4 {
+  composes: lineClamp;
+  -webkit-line-clamp: 6;
+  margin-bottom: 5px;
+}
