@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+}
+
+.section {
+  padding-bottom: 100px;
+  width: 400px;
+}

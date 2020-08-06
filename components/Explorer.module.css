@@ -1,0 +1,70 @@
+.settings {
+  background-color: #f0f4f8;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.apiParams {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.prompt {
+  padding: 20px 0;
+}
+
+.noteInput,
+.promptTextInput {
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid #f0f4f8;
+  line-height: 1.5em;
+}
+
+.promptTextInput {
+  padding: 20px;
+}
+
+.noteInput {
+  margin-bottom: 10px;
+  outline: none;
+  padding: 10px;
+}
+
+.promptTextInput:focus {
+  outline: none;
+  border: 2px solid #2185d0;
+}
+
+.submitBtn {
+  margin-top: 10px;
+}
+
+.outputHeader {
+  border-bottom: 2px solid #f0f4f8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.outputContainer {
+  padding: 20px;
+}
+
+.outputText {
+  white-space: pre-wrap;
+}
+
+.outputOptions {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signOut {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

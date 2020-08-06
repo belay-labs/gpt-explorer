@@ -1,0 +1,57 @@
+.root {
+  max-width: 800px;
+  padding: 40px 20px;
+  margin: 0 auto;
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.display {
+  margin-top: 20px;
+  display: flex;
+}
+
+.displaySection {
+  font-family: monospace;
+  line-height: 1.8;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+.displayHeaders {
+  padding-right: 10px;
+}
+
+.displayHeader {
+  height: 30px;
+}
+
+.settings {
+  margin-top: 40px;
+  background-color: #f0f4f8;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.parameterHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 12px;
+}
+
+.outputText {
+  color: #2485d0;
+}
+
+.response {
+  margin-top: 40px;
+}

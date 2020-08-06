@@ -1,0 +1,11 @@
+.toasts {
+  bottom: 20px;
+  left: 20px;
+  max-width: 60%;
+  position: fixed;
+  z-index: 1000;
+}
+
+.expired {
+  opacity: 0;
+}
