@@ -11,8 +11,10 @@
 
 Explorer is a power tool for iterating on GPT-3 prompts and settings. Bring your own [API key](https://beta.openai.com/).
 
-Don't have access yet? Check out some awesome completions from our community 🤗:
-
+Don't have access yet? Check out some awesome completions from the community 🤗 :\
+[Movie summaries](https://gpt-3-explorer.vercel.app/p/NpHR2nDQfISxPO2X7aU3) \
+[Q: Is a hot dog a sandwich?](https://gpt-3-explorer.vercel.app/p/4BESK0MnD62zKgGF5SiD) \
+[A discussion with a helpful medical expert.](https://gpt-3-explorer.vercel.app/p/pLRUoTAVRXEm9V1C3orE)
 
 
 ## Features
