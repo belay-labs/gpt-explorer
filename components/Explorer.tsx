@@ -149,22 +149,28 @@ const Explorer = ({
       switch (mode) {
         case DEVELOP_MODE: {
           if (e.keyCode == KEY_ENTER && e.shiftKey) {
+            e.preventDefault();
             makeCompletionRequest();
           }
 
           if (e.keyCode == KEY_ENTER && e.ctrlKey) {
+            e.preventDefault();
             appendToPrompt();
           }
 
           if (e.keyCode == KEY_N && e.ctrlKey) {
+            e.preventDefault();
             setAnnotateOpen(true);
           }
 
           if (e.keyCode == KEY_I) {
-            const focused = filter(inputRefs, (ref) => {
+            const inputFocused = filter(inputRefs, (ref) => {
               return ref.current?.inputRef?.current?.matches(":focus");
             });
-            if (!focused.length) {
+
+            const anyFocused = inputFocused.length || promptRef?.current?.matches(":focus");
+            if (!anyFocused) {
+              e.preventDefault();
               promptRef?.current?.focus();
             }
           }
@@ -173,6 +179,7 @@ const Explorer = ({
         }
         case ANNOTATION_MODE: {
           if (e.keyCode == KEY_ENTER && e.shiftKey) {
+            e.preventDefault();
             handleSaveNote();
           }
         }
