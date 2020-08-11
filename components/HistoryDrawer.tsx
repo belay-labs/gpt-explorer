@@ -162,7 +162,10 @@ const HistoryDrawer = ({
     };
 
     try {
-      const sharedId = await shareCompletionRequest(doc.id!, sharedCompletionRequest);
+      const sharedId = await shareCompletionRequest(
+        doc.id!,
+        sharedCompletionRequest
+      );
 
       handleUpdateRequest({ id: doc.id, sharedId });
       handleCopyShareLink(e, doc.id!, sharedId);

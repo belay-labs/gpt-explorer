@@ -19,17 +19,32 @@ const ApiKeyInput = ({ passedRef = null }: Props) => {
 
   return (
     <Form.Field>
-      <label>apiKey <Popup
-        basic={true}
-        content={
-          <><p>Your API key does not leave your browser and is only used to make direct requests to OpenAI.</p><p>Don't have an API key? Get access <a href="https://beta.openai.com/" target="_blank">here</a>.</p></>
-        }
-        hoverable={true}
-        inverted={true}
-        size="small"
-        trigger={<Icon name="info circle" />}
-        wide={true}
-      /></label>
+      <label>
+        apiKey{" "}
+        <Popup
+          basic={true}
+          content={
+            <>
+              <p>
+                Your API key does not leave your browser and is only used to
+                make direct requests to OpenAI.
+              </p>
+              <p>
+                Don't have an API key? Get access{" "}
+                <a href="https://beta.openai.com/" target="_blank">
+                  here
+                </a>
+                .
+              </p>
+            </>
+          }
+          hoverable={true}
+          inverted={true}
+          size="small"
+          trigger={<Icon name="info circle" />}
+          wide={true}
+        />
+      </label>
       <Input
         ref={passedRef}
         type="password"
