@@ -14,7 +14,9 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <Component {...pageProps} />
       <div style={{ bottom: "20px", right: "20px", position: "fixed" }}>
-        <a href="https://github.com/belay-labs/gpt-explorer" target="_blank"><Icon name="github" size="big"/></a>
+        <a href="https://github.com/belay-labs/gpt-explorer" target="_blank">
+          <Icon name="github" size="big" />
+        </a>
       </div>
     </>
   );

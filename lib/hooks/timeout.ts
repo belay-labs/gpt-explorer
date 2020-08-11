@@ -9,7 +9,7 @@ export function useStateTimeout<T>(
   const setRevertTimeout = (newVal: T) => {
     setVal(newVal);
     setTimeout(() => setVal(revertVal), seconds);
-  }
+  };
 
   return [val, setRevertTimeout];
 }

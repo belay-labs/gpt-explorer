@@ -172,7 +172,8 @@ const Explorer = ({
               return ref.current?.inputRef?.current?.matches(":focus");
             });
 
-            const anyFocused = inputFocused.length || promptRef?.current?.matches(":focus");
+            const anyFocused =
+              inputFocused.length || promptRef?.current?.matches(":focus");
             if (!anyFocused) {
               e.preventDefault();
               promptRef?.current?.focus();
@@ -276,12 +277,15 @@ const Explorer = ({
   const handleSaveNote = async () => {
     setAnnotateOpen(false);
     try {
-      await db.collection(COMPLETION_REQUESTS).doc(currentCompletionId).set(
-        {
-          annotations: { note },
-        },
-        { merge: true }
-      );
+      await db
+        .collection(COMPLETION_REQUESTS)
+        .doc(currentCompletionId)
+        .set(
+          {
+            annotations: { note },
+          },
+          { merge: true }
+        );
       handleUpdateRequest({ id: currentCompletionId, annotations: { note } });
     } catch (err) {
       console.log(err);
@@ -306,7 +310,10 @@ const Explorer = ({
       };
 
       try {
-        sharedId = await shareCompletionRequest(currentCompletionId, sharedCompletionRequest);
+        sharedId = await shareCompletionRequest(
+          currentCompletionId,
+          sharedCompletionRequest
+        );
       } catch (err) {
         // TODO(cathykc): Display error message
         console.error(err);
@@ -316,7 +323,7 @@ const Explorer = ({
     if (copied) setJustCopied(true);
 
     handleUpdateRequest({ id: currentCompletionId, sharedId });
-  }
+  };
 
   const appendToPrompt = () => setPrompt(prompt + outputText);
 
