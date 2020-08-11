@@ -14,8 +14,9 @@ import db, {
   SHARED_COMPLETION_REQUESTS,
   CompletionRequest,
   SharedCompletionRequest,
+  shareCompletionRequest,
 } from "../lib/db";
-import { useWindowSize } from "../lib/hooks";
+import { useStateTimeout, useWindowSize } from "../lib/hooks";
 import {
   HISTORY_MODE,
   KEY_ENTER,
@@ -43,7 +44,7 @@ const HistoryDrawer = ({
 }: Props) => {
   const [selectedRunIdx, setSelectedRunIdx] = useState(0);
 
-  const [justCopiedId, setJustCopiedId] = useState<string>("");
+  const [justCopiedId, setJustCopiedId] = useStateTimeout<string>("", 1500);
   const [currSharingId, setCurrSharingId] = useState<string>("");
   const [currUnsharingId, setCurrUnsharingId] = useState<string>("");
   const { height, width } = useWindowSize();
@@ -113,10 +114,7 @@ const HistoryDrawer = ({
     e.stopPropagation();
 
     const copied = copy(`${URL}p/${shareId}`);
-    if (copied) {
-      setJustCopiedId(id);
-      setTimeout(() => setJustCopiedId(""), 1500);
-    }
+    if (copied) setJustCopiedId(id);
   };
 
   const makeCompletionPrivate = async (
@@ -164,17 +162,10 @@ const HistoryDrawer = ({
     };
 
     try {
-      const saveShareRes = await db
-        .collection(SHARED_COMPLETION_REQUESTS)
-        .add(sharedCompletionRequest);
+      const sharedId = await shareCompletionRequest(doc.id!, sharedCompletionRequest);
 
-      await db
-        .collection(COMPLETION_REQUESTS)
-        .doc(doc.id)
-        .set({ sharedId: saveShareRes.id }, { merge: true });
-
-      handleUpdateRequest({ id: doc.id, sharedId: saveShareRes.id });
-      handleCopyShareLink(e, doc.id!, saveShareRes.id);
+      handleUpdateRequest({ id: doc.id, sharedId });
+      handleCopyShareLink(e, doc.id!, sharedId);
     } catch (err) {
       console.log(err);
       // TODO(cathykc): Display error message
@@ -184,7 +175,7 @@ const HistoryDrawer = ({
   };
 
   const settingRow = (label: string, settingValue: string | number) => (
-    <div className={styles.settingRow}>
+    <div className={styles.settingRow} key={label}>
       <div>{label}</div>
       <Label horizontal>{settingValue}</Label>
     </div>

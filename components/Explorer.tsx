@@ -1,4 +1,5 @@
 // EXTERNAL IMPORTS
+import copy from "copy-to-clipboard";
 import { assign, filter, map } from "lodash";
 import {
   Button,
@@ -26,14 +27,16 @@ import {
   HIDE_PARAMS_KEY,
   LANGUAGE_ENGINES,
   RAW_STORAGE_KEY,
+  URL,
 } from "../lib/constants";
 import db, {
   COMPLETION_REQUESTS,
   CompletionRequest,
-  SharedCompletionRequest,
   GPTSettings,
+  SharedCompletionRequest,
+  shareCompletionRequest,
 } from "../lib/db";
-import { useStorageBoolState } from "../lib/hooks";
+import { useStateTimeout, useStorageBoolState } from "../lib/hooks";
 import {
   ANNOTATION_MODE,
   DEVELOP_MODE,
@@ -86,6 +89,7 @@ const Explorer = ({
   const [showRaw, setShowRaw] = useStorageBoolState(RAW_STORAGE_KEY);
   const [hideParams, setHideParams] = useStorageBoolState(HIDE_PARAMS_KEY);
   const [annotateOpen, setAnnotateOpen] = useState(false);
+  const [justCopied, setJustCopied] = useStateTimeout(false, 1500);
 
   // TODO(cathykc): Currently prone to bugs, dynamically create refs from input count
   // Explorer field refs
@@ -285,6 +289,35 @@ const Explorer = ({
     }
   };
 
+  const copyShareLink = async () => {
+    let sharedId = (initialRequest as CompletionRequest)?.sharedId;
+    if (currentCompletionId !== initialRequest.id || !sharedId) {
+      const sharedCompletionRequest: SharedCompletionRequest = {
+        output: rawOutput,
+        prompt: prompt,
+        settings: {
+          frequencyPenalty,
+          languageEngine,
+          maxTokens,
+          presencePenalty,
+          stop,
+          temperature,
+        },
+      };
+
+      try {
+        sharedId = await shareCompletionRequest(currentCompletionId, sharedCompletionRequest);
+      } catch (err) {
+        // TODO(cathykc): Display error message
+        console.error(err);
+      }
+    }
+    const copied = copy(`${URL}p/${sharedId}`);
+    if (copied) setJustCopied(true);
+
+    handleUpdateRequest({ id: currentCompletionId, sharedId });
+  }
+
   const appendToPrompt = () => setPrompt(prompt + outputText);
 
   const handleChangeMaxTokens = ({ target }: { target: HTMLInputElement }) =>
@@ -431,13 +464,24 @@ const Explorer = ({
       <div className={styles.outputHeader}>
         <h4 style={{ margin: 0 }}>Output</h4>
         {rawOutput && (
-          <Button
-            basic={true}
-            compact={true}
-            content="Add a note [Ctrl + N]"
-            onClick={() => setAnnotateOpen(true)}
-            size="tiny"
-          />
+          <div>
+            <Button
+              basic={true}
+              compact={true}
+              color={justCopied ? "green" : undefined}
+              content={justCopied ? "Copied!" : "Copy share link"}
+              onClick={copyShareLink}
+              size="tiny"
+              style={{ width: "110px" }}
+            />
+            <Button
+              basic={true}
+              compact={true}
+              content="Add a note [Ctrl + N]"
+              onClick={() => setAnnotateOpen(true)}
+              size="tiny"
+            />
+          </div>
         )}
       </div>
       <Modal
