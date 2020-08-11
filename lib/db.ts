@@ -41,4 +41,17 @@ export interface SharedCompletionRequest {
   annotations?: Annotations;
 }
 
+export const shareCompletionRequest = async (id: string, data: SharedCompletionRequest) => {
+  const saveShareRes = await db
+    .collection(SHARED_COMPLETION_REQUESTS)
+    .add(data);
+
+  await db
+    .collection(COMPLETION_REQUESTS)
+    .doc(id)
+    .set({ sharedId: saveShareRes.id }, { merge: true });
+
+  return saveShareRes.id;
+}
+
 export default db;
