@@ -266,8 +266,6 @@ const Explorer = ({
       prompt: editorState.getCurrentContent().getPlainText(),
       stop: encodedStop,
       temperature,
-      // logprobs: 5,
-      // echo: true
     };
 
     const url = `https://api.openai.com/v1/engines/${languageEngine}/completions`;
@@ -319,7 +317,6 @@ const Explorer = ({
   const copyShareLink = async () => {
     let sharedId = (initialRequest as CompletionRequest)?.sharedId;
     if (currentCompletionId !== initialRequest.id || !sharedId) {
-      // get shared completion from completion in databse
       try {
         sharedId = await shareCompletionFromSaved(currentCompletionId);
       } catch (err) {

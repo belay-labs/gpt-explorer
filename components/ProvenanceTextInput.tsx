@@ -1,3 +1,4 @@
+// EXTERNAL IMPORTS
 import {
   CharacterMetadata,
   Editor,
@@ -7,18 +8,19 @@ import {
 import { OrderedSet } from "immutable";
 import { includes } from "lodash";
 
+// INTERNAL IMPORTS
 import { KEY_ENTER } from "../lib/shortcuts";
 
 interface Props {
+  passedRef: any;
   editorState: EditorState;
   setEditorState: (editorState: EditorState) => void;
-  passedRef: any;
 }
 
 const ProvenanceTextInput = ({
+  passedRef,
   editorState,
   setEditorState,
-  passedRef,
 }: Props) => {
   const createBoldStyle = () => {
     return CharacterMetadata.create({ style: OrderedSet.of("BOLD") });
@@ -41,16 +43,17 @@ const ProvenanceTextInput = ({
       )
     ) {
       const content = e.getCurrentContent();
-      const blocks = content.getBlockMap();
 
       let afterChangedBlock = false;
-      const updatedBlocks = blocks.map((block, blockKey) => {
+      const blocks = content.getBlockMap().map((block, blockKey) => {
         if (afterChangedBlock) {
           return block?.set(
             "characterList",
             block.getCharacterList().map(createBoldStyle)
           );
-        } else if (blockKey === key) {
+        }
+
+        if (blockKey === key) {
           afterChangedBlock = true;
           return block?.set(
             "characterList",
@@ -65,17 +68,15 @@ const ProvenanceTextInput = ({
                 }
               )
           );
-        } else {
-          return block;
         }
-      });
 
-      const updatedContent = content.set("blockMap", updatedBlocks);
+        return block;
+      });
 
       setEditorState(
         EditorState.setInlineStyleOverride(
           EditorState.create({
-            currentContent: updatedContent,
+            currentContent: content.set("blockMap", blocks),
             selection: selection,
           }),
           OrderedSet.of("BOLD")
