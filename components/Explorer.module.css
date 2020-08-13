@@ -55,6 +55,7 @@
 
 .outputText {
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .outputOptions {

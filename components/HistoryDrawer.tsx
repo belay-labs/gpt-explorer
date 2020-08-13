@@ -158,6 +158,7 @@ const HistoryDrawer = ({
     const sharedCompletionRequest: SharedCompletionRequest = {
       output: doc.output,
       prompt: doc.prompt,
+      editorContent: doc.editorContent,
       settings: doc.settings,
     };
 

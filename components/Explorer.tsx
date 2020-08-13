@@ -1,5 +1,13 @@
 // EXTERNAL IMPORTS
 import copy from "copy-to-clipboard";
+import {
+  ContentState,
+  convertFromRaw,
+  convertToRaw,
+  Editor,
+  EditorState,
+  Modifier,
+} from "draft-js";
 import { assign, filter, map } from "lodash";
 import {
   Button,
@@ -34,7 +42,7 @@ import db, {
   CompletionRequest,
   GPTSettings,
   SharedCompletionRequest,
-  shareCompletionRequest,
+  shareCompletionFromSaved,
 } from "../lib/db";
 import { useStateTimeout, useStorageBoolState } from "../lib/hooks";
 import {
@@ -47,7 +55,7 @@ import {
 import { getOutputText } from "../lib/utils";
 import ApiKeyInput, { getApiKey } from "./ApiKeyInput";
 import PrettyCode from "./PrettyCode";
-import TextareaInput from "./TextareaInput";
+import ProvenanceTextInput from "./ProvenanceTextInput";
 import TwoColumnLayout from "./TwoColumnLayout";
 
 import styles from "./Explorer.module.css";
@@ -78,7 +86,7 @@ const Explorer = ({
   const [languageEngine, setLanguageEngine] = useState(DEFAULT_ENGINE);
 
   // Explorer fields
-  const [prompt, setPrompt] = useState("");
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [rawOutput, setRawOutput] = useState({});
   const [outputText, setOutputText] = useState("");
   const [note, setNote] = useState("");
@@ -99,14 +107,14 @@ const Explorer = ({
     inputRefs[i] = useRef<Input>(null);
   }
 
-  const promptRef = useRef<HTMLTextAreaElement>(null);
+  const editorRef = useRef<Editor>(null);
 
   useEffect(() => {
     if (mode !== DEVELOP_MODE) {
       map(inputRefs, (ref) => {
         ref.current?.inputRef?.current?.blur();
       });
-      promptRef?.current?.blur();
+      editorRef.current?.blur();
     }
   }, [mode]);
 
@@ -122,13 +130,26 @@ const Explorer = ({
 
   useEffect(() => {
     if (initialRequest) {
-      const { annotations, id, output, prompt, settings } = initialRequest;
+      const { annotations, id, output, settings } = initialRequest;
 
-      setPrompt(prompt);
       setRawOutput(output);
       setOutputText(getOutputText(output));
       setNote(annotations?.note || "");
       setCurrentCompletionId(id!);
+
+      if (initialRequest.editorContent) {
+        setEditorState(
+          EditorState.createWithContent(
+            convertFromRaw(initialRequest.editorContent)
+          )
+        );
+      } else {
+        setEditorState(
+          EditorState.createWithContent(
+            ContentState.createFromText(initialRequest.prompt)
+          )
+        );
+      }
 
       // If settings from previous run exist update, else use default
       const {
@@ -173,10 +194,10 @@ const Explorer = ({
             });
 
             const anyFocused =
-              inputFocused.length || promptRef?.current?.matches(":focus");
+              inputFocused.length || editorState.getSelection().getHasFocus();
             if (!anyFocused) {
               e.preventDefault();
-              promptRef?.current?.focus();
+              editorRef.current?.focus();
             }
           }
 
@@ -207,10 +228,13 @@ const Explorer = ({
       temperature,
     };
 
+    const editorContent = editorState.getCurrentContent();
+
     const completionRequest: CompletionRequest = {
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       output: response,
-      prompt,
+      prompt: editorContent.getPlainText(),
+      editorContent: convertToRaw(editorContent),
       userId: user.uid,
       settings,
     };
@@ -223,7 +247,7 @@ const Explorer = ({
       handleNewRequest(assign(completionRequest, { id: res.id }));
     } catch (err) {
       // TODO (cathykc): handle API error
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -239,9 +263,11 @@ const Explorer = ({
       frequency_penalty: frequencyPenalty,
       max_tokens: maxTokens,
       presence_penalty: presencePenalty,
-      prompt,
+      prompt: editorState.getCurrentContent().getPlainText(),
       stop: encodedStop,
       temperature,
+      // logprobs: 5,
+      // echo: true
     };
 
     const url = `https://api.openai.com/v1/engines/${languageEngine}/completions`;
@@ -262,7 +288,7 @@ const Explorer = ({
       setRawOutput(responseJson);
       setOutputText(getOutputText(responseJson));
     } catch (err) {
-      console.log(err);
+      console.error(err);
       // TODO(cathykc): Display error message
     }
     setSubmitting(false);
@@ -277,18 +303,15 @@ const Explorer = ({
   const handleSaveNote = async () => {
     setAnnotateOpen(false);
     try {
-      await db
-        .collection(COMPLETION_REQUESTS)
-        .doc(currentCompletionId)
-        .set(
-          {
-            annotations: { note },
-          },
-          { merge: true }
-        );
+      await db.collection(COMPLETION_REQUESTS).doc(currentCompletionId).set(
+        {
+          annotations: { note },
+        },
+        { merge: true }
+      );
       handleUpdateRequest({ id: currentCompletionId, annotations: { note } });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       // TODO(cathykc): Display error message
     }
   };
@@ -296,24 +319,9 @@ const Explorer = ({
   const copyShareLink = async () => {
     let sharedId = (initialRequest as CompletionRequest)?.sharedId;
     if (currentCompletionId !== initialRequest.id || !sharedId) {
-      const sharedCompletionRequest: SharedCompletionRequest = {
-        output: rawOutput,
-        prompt: prompt,
-        settings: {
-          frequencyPenalty,
-          languageEngine,
-          maxTokens,
-          presencePenalty,
-          stop,
-          temperature,
-        },
-      };
-
+      // get shared completion from completion in databse
       try {
-        sharedId = await shareCompletionRequest(
-          currentCompletionId,
-          sharedCompletionRequest
-        );
+        sharedId = await shareCompletionFromSaved(currentCompletionId);
       } catch (err) {
         // TODO(cathykc): Display error message
         console.error(err);
@@ -325,7 +333,16 @@ const Explorer = ({
     handleUpdateRequest({ id: currentCompletionId, sharedId });
   };
 
-  const appendToPrompt = () => setPrompt(prompt + outputText);
+  const appendToPrompt = () => {
+    const editor = EditorState.moveFocusToEnd(editorState);
+    const content = Modifier.insertText(
+      editorState.getCurrentContent(),
+      editor.getSelection(),
+      outputText
+    );
+    const newState = EditorState.createWithContent(content);
+    setEditorState(EditorState.moveFocusToEnd(newState));
+  };
 
   const handleChangeMaxTokens = ({ target }: { target: HTMLInputElement }) =>
     setMaxTokens(parseInt(target.value));
@@ -347,8 +364,6 @@ const Explorer = ({
     _e: SyntheticEvent<HTMLElement>,
     { value }: DropdownProps
   ) => setLanguageEngine(value as string);
-  const handleChangePrompt = ({ target }: { target: HTMLTextAreaElement }) =>
-    setPrompt(target.value);
   const handleChangeNote = ({ target }: { target: HTMLTextAreaElement }) =>
     setNote(target.value);
 
@@ -444,12 +459,10 @@ const Explorer = ({
       </div>
       <div className={styles.prompt}>
         <h4>Prompt</h4>
-        <TextareaInput
-          ref={promptRef}
-          onChange={handleChangePrompt}
-          maxRows={24}
-          minRows={10}
-          value={prompt}
+        <ProvenanceTextInput
+          editorState={editorState}
+          passedRef={editorRef}
+          setEditorState={setEditorState}
         />
         <div className={styles.submitBtn}>
           <Button

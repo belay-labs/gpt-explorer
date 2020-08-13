@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.1",
+    "draft-js": "^0.11.6",
     "firebase": "7.16.1",
+    "immutable": "3.8.2",
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "next": "9.4.4",
@@ -22,6 +24,7 @@
     "semantic-ui-react": "^1.0.0"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.10.43",
     "@types/lodash": "^4.14.158",
     "@types/node": "^14.0.24",
     "@types/react": "^16.9.43",
@@ -32,6 +35,9 @@
     "prettier": "2.0.5",
     "typescript": "^3.9.7",
     "yarn": "^1.22.4"
+  },
+  "resolutions": {
+    "draft-js/immutable": "3.8.2"
   },
   "husky": {
     "hooks": {

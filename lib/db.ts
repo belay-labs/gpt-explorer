@@ -22,6 +22,7 @@ export interface Annotations {
 
 export interface CompletionRequest {
   id?: string;
+  editorContent: any;
   createdAt: any;
   output: any;
   prompt: string;
@@ -36,10 +37,30 @@ export interface SharedCompletionRequest {
   id?: string;
   output: any;
   prompt: string;
+  editorContent: any;
   settings: GPTSettings;
 
   annotations?: Annotations;
 }
+
+export const shareCompletionFromSaved = async (savedId: string) => {
+  const savedCompletion = await db
+    .collection(COMPLETION_REQUESTS)
+    .doc(savedId)
+    .get();
+  if (!savedCompletion.exists) throw new Error("Can't find document");
+
+  const data = savedCompletion.data();
+
+  const sharedCompletionRequest: SharedCompletionRequest = {
+    editorContent: data?.editorContent,
+    output: data?.output,
+    prompt: data?.prompt,
+    settings: data?.settings,
+  };
+
+  return await shareCompletionRequest(savedId, sharedCompletionRequest);
+};
 
 export const shareCompletionRequest = async (
   id: string,
