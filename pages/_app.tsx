@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import { Icon } from "semantic-ui-react";
 
 import "semantic-ui-css/semantic.min.css";
+import "../components/Draft.css";
 
 import Head from "next/head";
 
