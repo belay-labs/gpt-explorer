@@ -53,7 +53,7 @@ export function Export({ user }: Props) {
         onClick={handleExport}
         primary={true}
       >
-        <Icon name="pause" />
+        <Icon name="download" />
         Download history (.json)
       </Button>
       <div className={styles.otherFormat}>
