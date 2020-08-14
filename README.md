@@ -48,6 +48,8 @@ Share completions with collaborators and the world. Have them try out the settin
 
 Your data is securely stored in Firebase behind Google OAuth. Explorer does not own your data - we do not use or sell it to third-parties. Read more in our [privacy policy](https://www.notion.so/belay/GPT-3-Explorer-Data-Privacy-cc78082a1d994b7ab8d37df0039a5017).
 
+Get a download of all your data [here](http://gpt-3-explorer.vercel.app/export).
+
 
 ## Contributing
 
@@ -95,7 +97,7 @@ Check out our [public roadmap](https://github.com/belay-labs/gpt-explorer/projec
 
 
 ## Maintainers
-Hi! We're [Cathy](https://github.com/cathykc), [Stedman](https://github.com/stedmanblake), and [Zain](https://github.com/tarzain). We initially built this as a small internal tool and thought it'd be useful to others as they explore GPT-3 usecases. Feel free to DM us in the OpenAI Slack or email us at cathy@belaylabs.com! 👋
+Hi! We're [Cathy](https://github.com/cathykc), [Stedman](https://github.com/stedmanblake), and [Zain](https://github.com/tarzain). We initially built this as a small internal tool and thought it'd be useful to others as they explore GPT-3 usecases. Feel free to DM us in the OpenAI Slack or email us at hello@belaylabs.com! 👋
 
 #### Resources we love
 **[📜 gpt-scrolls](https://github.com/maraoz/gpt-scrolls)**\
