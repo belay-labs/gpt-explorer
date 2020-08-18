@@ -121,7 +121,7 @@ export function Home({ user, sharedRequest }: Props) {
 
   const populateRun = (recentRun: CompletionRequest) => {
     setMode(DEVELOP_MODE);
-    setInitialRequest(recentRun);
+    setInitialRequest({ ...recentRun });
   };
 
   const signOut = () => auth.signOut();
