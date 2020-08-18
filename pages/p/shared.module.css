@@ -27,6 +27,7 @@
 
 .displayHeaders {
   padding-right: 10px;
+  white-space: nowrap;
 }
 
 .displayHeader {

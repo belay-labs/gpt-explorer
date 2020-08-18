@@ -156,7 +156,7 @@ const HistoryDrawer = ({
     setCurrSharingId(doc.id!);
 
     const sharedCompletionRequest: SharedCompletionRequest = {
-      editorContent: doc.editorContent,
+      editorContent: doc.editorContent || null,
       output: doc.output,
       prompt: doc.prompt,
       settings: doc.settings,

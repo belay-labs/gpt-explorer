@@ -21,6 +21,7 @@ import db, {
 } from "../../lib/db";
 import { getOutputText, nullDefault } from "../../lib/utils";
 import PrettyCode from "../../components/PrettyCode";
+import ProvenanceTextDisplay from "../../components/ProvenanceTextDisplay";
 
 import styles from "./shared.module.css";
 
@@ -33,7 +34,7 @@ interface Props {
 const Shared = ({ completion, sharedId }: Props) => {
   if (!completion) return <NextError statusCode={404} />;
 
-  const { prompt, output, settings } = completion;
+  const { editorContent, prompt, output, settings } = completion;
 
   const outputTextRef = useRef<HTMLSpanElement>(null);
   const [outputOffset, setOutputOffset] = useState(0);
@@ -84,11 +85,15 @@ const Shared = ({ completion, sharedId }: Props) => {
             className={styles.displayHeader}
             style={{ marginTop: `${outputOffset}px` }}
           >
-            <Label color="blue">Completion</Label>
+            <Label color="blue">Last completion</Label>
           </div>
         </div>
         <div className={styles.displaySection}>
-          <span>{prompt}</span>
+          {editorContent ? (
+            <ProvenanceTextDisplay content={editorContent} />
+          ) : (
+            <span>{prompt}</span>
+          )}
           <span className={styles.outputText} ref={outputTextRef}>
             <strong>{getOutputText(output)}</strong>
           </span>
